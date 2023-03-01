@@ -1,10 +1,12 @@
 <?php
 
 require_once 'src/Conta.php';
+require_once 'src/Titular.php';
 
-$contaUm = new Conta();
 
-$contaUm -> deposita(900);
-$contaUm -> saca(30);
+$titularFabricio = new Titular ('18115151515', 'Fabricio');
 
-echo $contaUm -> recuperaSaldoConta();
+$contaUm = new Conta($titularFabricio);
+
+
+echo Conta::recuperaNumeroDeContas();

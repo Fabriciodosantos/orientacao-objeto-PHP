@@ -2,9 +2,23 @@
 
 class Conta
 {
-    private string $cpfTitular;
-    private string $nomeTitular;
-    private float $saldoConta = 0;
+    private Titular $titular;
+    private float $saldoConta;
+    private static int $numeroDecontas = 0;
+
+
+    public function __construct(Titular $titular)
+    {
+        $this -> titular = $titular;
+        $this-> saldoConta = 0;
+
+        self::$numeroDecontas++;
+    }
+
+    public function __destruct()
+    {
+        self::$numeroDecontas--;
+    }
 
     public function saca ($valorSacar):void
     {
@@ -36,34 +50,19 @@ class Conta
             return;
         }
 
-        $this -> sacar($valorATransferir);
+        $this -> saca($valorATransferir);
         $contaDeDestino -> saldoConta += $valorATransferir;
-    }
-    
-    public function defineCpfTitular ($cpf):void
-    {
-        $this->cpfTitular = $cpf;
-    }
-
-    public function recuperaCpfTitular () : string
-    {
-        return $this->cpfTitular;
-    }
-
-
-    public function defineNomeTitular ($nome):void
-    {
-        $this->nomeTitular = $nome;
-    }
-     
-    public function recuperaNomeTitular ():string
-    {
-        return $this-> nomeTitular;
     }
 
 
     public function recuperaSaldoConta ():float
     {
         return $this->saldoConta;
+    }
+
+
+    public static function recuperaNumeroDeContas () :int
+    {
+        return self::$numeroDecontas; //self funciona como se fosse o this, só que usado em atributos static
     }
 }
